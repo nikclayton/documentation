@@ -331,10 +331,10 @@ note
 : String. The account bio.
 
 avatar
-: Avatar image encoded using `multipart/form-data`
+: Avatar image encoded using `multipart/form-data`. This can not currently be used to delete an avatar image, only supply a new one (https://github.com/mastodon/mastodon/issues/18921).
 
 header
-: Header image encoded using `multipart/form-data`
+: Header image encoded using `multipart/form-data`. This can not currently be used to delete a header image, only supply a new one (https://github.com/mastodon/mastodon/issues/18921).
 
 locked
 : Boolean. Whether manual approval of follow requests is required.
