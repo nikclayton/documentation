@@ -3,7 +3,6 @@ title: scheduled_statuses API methods
 description: Manage statuses that were scheduled to be published at a future date.
 menu:
   docs:
-    weight: 30
     name: scheduled_statuses
     parent: methods-statuses
     identifier: methods-scheduled_statuses
@@ -69,7 +68,9 @@ limit
       "scheduled_at": null,
       "spoiler_text": null,
       "application_id": 596551,
-      "in_reply_to_id": null
+      "in_reply_to_id": null,
+      "quoted_status_id": null,
+      "quote_approval_policy": "followers"
     },
     "media_attachments": []
   }
@@ -128,7 +129,9 @@ Authorization
     "scheduled_at": null,
     "spoiler_text": null,
     "application_id": 596551,
-    "in_reply_to_id": null
+    "in_reply_to_id": null,
+    "quoted_status_id": null,
+    "quote_approval_policy": "followers"
   },
   "media_attachments": []
 }
@@ -201,7 +204,9 @@ scheduled_at
     "scheduled_at": null,
     "spoiler_text": null,
     "application_id": 596551,
-    "in_reply_to_id": null
+    "in_reply_to_id": null,
+    "quoted_status_id": null,
+    "quote_approval_policy": "followers"
   },
   "media_attachments": []
 }

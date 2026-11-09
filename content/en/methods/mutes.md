@@ -3,7 +3,6 @@ title: mutes API methods
 description: View your mutes. See also accounts/:id/{mute,unmute}
 menu:
   docs:
-    weight: 30
     name: mutes
     parent: methods-accounts
     identifier: methods-mutes
@@ -26,7 +25,7 @@ GET /api/v1/mutes HTTP/1.1
 
 Accounts the user has muted.
 
-**Returns:** Array of [Account]({{<relref "entities/Account">}})\
+**Returns:** Array of [MutedAccount]({{<relref "entities/Account#MutedAccount">}})\
 **OAuth:** User token + `read:mutes` or `follow`\
 **Version history:**\
 0.0.0 - added\

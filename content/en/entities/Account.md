@@ -15,6 +15,8 @@ aliases: [
   "/entities/CredentialAccount",
   "/entities/mutedaccount",
   "/entities/MutedAccount",
+  "/entities/partialaccountwithavatar",
+  "/entities/PartialAccountWithAvatar",
   "/api/entities/source/",
   "/api/entities/Source/",
   "/api/entities/field/",
@@ -25,6 +27,8 @@ aliases: [
   "/api/entities/CredentialAccount",
   "/api/entities/mutedaccount",
   "/api/entities/MutedAccount",
+  "/api/entities/partialaccountwithavatar",
+  "/api/entities/PartialAccountWithAvatar",
 ]
 ---
 
@@ -39,16 +43,23 @@ aliases: [
   "locked": false,
   "bot": false,
   "created_at": "2017-02-08T02:00:53.274Z",
-  "note": "<p>:ms_rainbow_flag:​ :ms_bisexual_flagweb:​ :ms_nonbinary_flag:​ <a href=\"https://awoo.space/tags/awoo\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>awoo</span}.space <a href=\"https://awoo.space/tags/admin\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>admin</span} ~ <a href=\"https://awoo.space/tags/bi\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>bi</span} ~ <a href=\"https://awoo.space/tags/nonbinary\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>nonbinary</span} ~ compsci student ~ likes video <a href=\"https://awoo.space/tags/games\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>games</span} and weird/ old electronics and will post obsessively about both ~ avatar by <span class=\"h-card\"><a href=\"https://weirder.earth/@dzuk\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>dzuk</span}</span></p>",
+  "note": "<p>:ms_rainbow_flag:​ :ms_bisexual_flagweb:​ :ms_nonbinary_flag:​ <a href=\"https://awoo.space/tags/awoo\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>awoo</span></a>.space <a href=\"https://awoo.space/tags/admin\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>admin</span></a> ~ <a href=\"https://awoo.space/tags/bi\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>bi</span></a> ~ <a href=\"https://awoo.space/tags/nonbinary\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>nonbinary</span></a> ~ compsci student ~ likes video <a href=\"https://awoo.space/tags/games\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>games</span></a> and weird/ old electronics and will post obsessively about both ~ avatar by <span class=\"h-card\"><a href=\"https://weirder.earth/@dzuk\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>dzuk</span></a></span></p>",
   "url": "https://awoo.space/@noiob",
   "avatar": "https://files.mastodon.social/accounts/avatars/000/023/634/original/6ca8804dc46800ad.png",
   "avatar_static": "https://files.mastodon.social/accounts/avatars/000/023/634/original/6ca8804dc46800ad.png",
+  "avatar_description": "a shark",
   "header": "https://files.mastodon.social/accounts/headers/000/023/634/original/256eb8d7ac40f49a.png",
   "header_static": "https://files.mastodon.social/accounts/headers/000/023/634/original/256eb8d7ac40f49a.png",
+  "header_description": "sharks in the sea",
   "followers_count": 547,
   "following_count": 404,
   "statuses_count": 28468,
   "last_status_at": "2019-11-17",
+  "indexable": true,
+  "show_media": true,
+  "show_media_replies": true,
+  "show_featured": true,
+  "roles": [],
   "emojis": [
     {
       "shortcode": "ms_rainbow_flag",
@@ -77,20 +88,25 @@ aliases: [
     },
     {
       "name": "Alt",
-      "value": "<span class=\"h-card\"><a href=\"https://cybre.space/@noiob\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>noiob</span}</span>",
+      "value": "<span class=\"h-card\"><a href=\"https://cybre.space/@noiob\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>noiob</span></a></span>",
       "verified_at": null
     },
     {
       "name": "Bots",
-      "value": "<span class=\"h-card\"><a href=\"https://botsin.space/@darksouls\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>darksouls</span}</span>, <span class=\"h-card\"><a href=\"https://botsin.space/@nierautomata\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>nierautomata</span}</span>, <span class=\"h-card\"><a href=\"https://mastodon.social/@fedi\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>fedi</span}</span>, code for <span class=\"h-card\"><a href=\"https://botsin.space/@awoobot\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>awoobot</span}</span>",
+      "value": "<span class=\"h-card\"><a href=\"https://botsin.space/@darksouls\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>darksouls</span></a></span>, <span class=\"h-card\"><a href=\"https://botsin.space/@nierautomata\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>nierautomata</span></a></span>, <span class=\"h-card\"><a href=\"https://mastodon.social/@fedi\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>fedi</span></a></span>, code for <span class=\"h-card\"><a href=\"https://botsin.space/@awoobot\" class=\"u-url mention\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">@<span>awoobot</span></a></span>",
       "verified_at": null
     },
     {
       "name": "Website",
-      "value": "<a href=\"http://shork.xyz\" rel=\"nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">http://</span><span class=\"\">shork.xyz</span><span class=\"invisible\"></span}",
+      "value": "<a href=\"http://shork.xyz\" rel=\"nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">http://</span><span class=\"\">shork.xyz</span><span class=\"invisible\"></span></a>",
       "verified_at": "2019-11-10T10:31:10.744+00:00"
     }
-  ]
+  ],
+  "feature_approval": {
+    "automatic": [ "public" ],
+    "manual": [],
+    "current_user": "automatic"
+  }
 }
 ```
 
@@ -112,21 +128,21 @@ aliases: [
 
 ### `acct` {#acct}
 
-**Description:** The Webfinger account URI. Equal to `username` for local users, or `username@domain` for remote users.\
+**Description:** The WebFinger account URI. Equal to `username` for local users, or `username@domain` for remote users.\
 **Type:** String\
 **Version history:**\
 0.1.0 - added
 
 ### `url` {#url}
 
-**Description:** The location of the user's profile page.\
-**Type:** String (URL)\
+**Description:** The location of the user's profile page (web interface URL).\
+**Type:** {{<nullable>}} String (URL)\
 **Version history:**\
 0.1.0 - added
 
 ### `uri` {#uri}
 
-**Description:** The user's ActivityPub actor identifier.\
+**Description:** The user's ActivityPub actor identifier (used for federation).\
 **Type:** String (URL)\
 **Version history:**\
 4.2.0 - added
@@ -159,6 +175,13 @@ aliases: [
 **Version history:**\
 1.1.2 - added
 
+### `avatar_description` {#avatar_description}
+
+**Description:** A textual description of the avatar image.\
+**Type:** String\
+**Version history:**\
+4.6.0 - added
+
 ### `header` {#header}
 
 **Description:** An image banner that is shown above the profile and in profile cards. Will end `/headers/original/missing.png` if the user has not set a header image.\
@@ -172,6 +195,13 @@ aliases: [
 **Type:** String (URL)\
 **Version history:**\
 1.1.2 - added
+
+### `header_description` {#header_description}
+
+**Description:** A textual description of the header image.\
+**Type:** String\
+**Version history:**\
+4.6.0 - added
 
 ### `locked` {#locked}
 
@@ -196,7 +226,7 @@ aliases: [
 
 ### `bot` {#bot}
 
-**Description:** Indicates that the account may perform automated actions, may not be monitored, or identifies as a robot.\
+**Description:** Indicates that the account may perform automated actions, may not be monitored, or identifies as a robot. This is determined by the account's `actor_type` being set to 'Application' or 'Service'.\
 **Type:** Boolean\
 **Version history:**\
 2.4.0 - added
@@ -215,6 +245,13 @@ aliases: [
 **Version history:**\
 3.1.0 - added
 
+### `indexable` {#indexable}
+
+**Description:** Whether the account allows indexing by search engines.\
+**Type:** Boolean\
+**Version history:**\
+4.3.0 - added
+
 ### `noindex` {{%optional%}} {#noindex}
 
 **Description:** Whether the local user has opted out of being indexed by search engines.\
@@ -225,14 +262,21 @@ aliases: [
 ### `moved` {{%optional%}} {#moved}
 
 **Description:** Indicates that the profile is currently inactive and that its user has moved to a new account.\
-**Type:** {{<nullable>}} [Account]({{< relref "entities/Account" >}}), or null if the profile is suspended.\
+**Type:** {{<nullable>}} [Account]({{< relref "entities/Account" >}}), or null if the profile has not moved or is suspended.\
 **Version history:**\
 2.1.0 - added
+
+### `memorial` {{%optional%}} {#memorial}
+
+**Description:** An extra attribute returned only when an account is memorialized (when `memorial` is true).\
+**Type:** Boolean\
+**Version history:**\
+4.2.0 - added
 
 ### `suspended` {{%optional%}} {#suspended}
 
 **Description:** An extra attribute returned only when an account is suspended.\
-**Type:**  Boolean\
+**Type:** Boolean\
 **Version history:**\
 3.3.0 - added
 
@@ -283,9 +327,52 @@ aliases: [
 ### `hide_collections` {#hide_collections}
 
 **Description:** Whether the user hides the contents of their follows and followers collections.\
-**Type:** Boolean\
+**Type:** {{<nullable>}} Boolean\
 **Version history:**\
 4.3.0 - added
+
+### `show_media` {#show_media}
+
+**Description:** Whether the account wishes to have a “Media” tab with media attachments on their profile.\
+**Type:** Boolean\
+**Version history:**\
+4.6.0 - added
+
+### `show_media_replies` {#show_media_replies}
+
+**Description:** Whether the account wishes to have replies in the “Media” tab on their profile.\
+**Type:** Boolean\
+**Version history:**\
+4.6.0 - added
+
+### `show_featured` {#show_featured}
+
+**Description:** Whether the account wishes to have a “Featured” tab on their profile.\
+**Type:** Boolean\
+**Version history:**\
+4.6.0 - added
+
+### `roles` {#roles}
+
+**Description:** An array of roles assigned to the user that are publicly visible (highlighted roles only), if the account is local. Will be an empty array if no roles are highlighted or null if the account is remote.\
+**Type:** {{<nullable>}} Array of [AccountRole](#AccountRole)\
+**Version history:**\
+4.1.0 - added
+
+### `feature_approval` {#feature_approval}
+
+**Description:** Summary of the account's policy with regards to being featured in a [Collection]({{< relref "entities/Collection" >}}) and how it applies to the user making the request.\
+**Type:** [FeatureApproval]({{< relref "entities/FeatureApproval" >}})
+**Version history:**\
+4.6.0 - added
+
+### `invalid_handle` {{%optional%}} {#invalid_handle}
+
+**Description**: Whether the account has an invalid handle. An account with an invalid handle will still be returned with a server-unique `acct`, but it should not be assumed to be resolvable outside of this server or reflect the account's chosen username or residing server. It is a placeholder for accounts for which the handle cannot be verified, which should be a rare and temporary edge-case.\
+**Type:** Boolean\
+4.7.0 - added
+
+---
 
 ## CredentialAccount entity attributes {#CredentialAccount}
 
@@ -298,10 +385,13 @@ aliases: [
   // ...
   "note": "<p>i have approximate knowledge of many things. perpetual student. (nb/ace/they)</p><p>xmpp/email: a@trwnh.com<br /><a href=\"https://trwnh.com\" target=\"_blank\" rel=\"nofollow noopener noreferrer\"><span class=\"invisible\">https://</span><span class=\"\">trwnh.com</span><span class=\"invisible\"></span></a><br />help me live: <a href=\"https://liberapay.com/trwnh\" target=\"_blank\" rel=\"nofollow noopener noreferrer\"><span class=\"invisible\">https://</span><span class=\"\">liberapay.com/trwnh</span><span class=\"invisible\"></span></a> or paypal</p><p>- my triggers are moths and glitter<br />- i have all notifs except mentions turned off, so please interact if you wanna be friends! i literally will not notice otherwise<br />- dm me if i did something wrong, so i can improve<br />- purest person on fedi, do not lewd in my presence</p>",
   // ...
+  "indexable": true,
+  "roles": [],
   "source": {
     "attribution_domains": ["example.com", "example.net"],
     "privacy": "public",
     "sensitive": false,
+    "spoiler_field": false,
     "language": "",
     "note": "i have approximate knowledge of many things. perpetual student. (nb/ace/they)\r\n\r\nxmpp/email: a@trwnh.com\r\nhttps://trwnh.com\r\nhelp me live: https://liberapay.com/trwnh or paypal\r\n\r\n- my triggers are moths and glitter\r\n- i have all notifs except mentions turned off, so please interact if you wanna be friends! i literally will not notice otherwise\r\n- dm me if i did something wrong, so i can improve\r\n- purest person on fedi, do not lewd in my presence",
     "fields": [
@@ -326,7 +416,10 @@ aliases: [
         "verified_at": null
       }
     ],
-    "follow_requests_count": 5
+    "follow_requests_count": 5,
+    "hide_collections": false,
+    "discoverable": false,
+    "indexable": true
   },
   // ...
   "fields": [
@@ -377,7 +470,7 @@ aliases: [
 
 #### `source[note]` {#source-note}
 
-**Description:** Profile bio, in plain-text instead of in HTML.\
+**Description:** Profile bio, in plain text instead of HTML.\
 **Type:** String\
 **Version history:**\
 1.5.0 - added
@@ -407,10 +500,17 @@ aliases: [
 **Version history:**\
 1.5.0 - added
 
+#### `source[spoiler_field]` {#source-spoiler-field}
+
+**Description:** Whether new statuses should have content warnings by default.\
+**Type:** Boolean\
+**Version history:**\
+5.0.0 - added
+
 #### `source[language]` {#source-language}
 
 **Description:** The default posting language for new statuses.\
-**Type:** String (ISO 639-1 language two-letter code) or empty string\
+**Type:** String (ISO 639-1 language two-letter code, or empty string)\
 **Version history:**\
 2.4.2 - added
 
@@ -421,12 +521,52 @@ aliases: [
 **Version history:**\
 3.0.0 - added
 
+#### `source[hide_collections]` {#source-hide_collections}
+
+**Description:** Whether the user hides the contents of their follows and followers collections.\
+**Type:** {{<nullable>}} Boolean\
+**Version history:**\
+4.1.0 - added
+
+#### `source[discoverable]` {#source-discoverable}
+
+**Description:** Whether the account has opted into discovery features such as the profile directory.\
+**Type:** {{<nullable>}} Boolean\
+**Version history:**\
+3.1.0 - added
+
+#### `source[indexable]` {#source-indexable}
+
+**Description:** Whether public posts should be searchable to anyone.\
+**Type:** Boolean\
+**Version history:**\
+4.3.0 - added
+
+#### `source[quote_policy]` {#source-quote_policy}
+
+**Description:** The default quote policy to be used for new statuses.\
+**Type:** String (Enumerable, oneOf)\
+`public` = Anyone (except blocked accounts) can quote\
+`followers` = Only followers and author can quote\
+`nobody` = Only author can quote\
+**Version history:**\
+4.5.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 7) - added `posting:default:quoted_policy`
+
 ### `role` {#role}
 
-**Description:** The role assigned to the currently authorized user.\
+**Description:** The complete role assigned to the currently authorized user, including permissions and highlighted status.\
 **Type:** [Role]({{< relref "entities/Role" >}})\
 **Version history:**\
 4.0.0 - added
+
+### `state` {#state}
+
+**Description:** State of the current account.\
+**Type:** [AccountState](#AccountState)\
+**Version history:**\
+5.0.0 - added
+
+---
 
 ## MutedAccount entity attributes {#MutedAccount}
 
@@ -436,6 +576,114 @@ aliases: [
 **Type:** {{<nullable>}} String ([Datetime](/api/datetime-format#datetime)), or null if the mute is indefinite\
 **Version history:**\
 3.3.0 - added
+
+---
+
+## `PartialAccountWithAvatar` entity {#PartialAccountWithAvatar}
+
+These are stripped-down versions of [Account]({{< relref "entities/Account" >}}) that only contain what is necessary to display a list of avatars, as well as a few other useful properties. The aim is to cut back on expensive server-side serialization and reduce the network payload size e.g. of [notification groups]({{< relref "methods/grouped_notifications" >}}).
+
+### Attributes
+
+#### `id`
+
+**Description:** The account id.\
+**Type:** String (cast from an integer, but not guaranteed to be a number)\
+**Version history:**\
+4.3.0 - added
+
+#### `acct`
+
+**Description:** The WebFinger account URI. Equal to `username` for local users, or `username@domain` for remote users.\
+**Type:** String\
+**Version history:**\
+4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
+
+#### `url`
+
+**Description:** The location of the user's profile page.\
+**Type:** String (URL)\
+**Version history:**\
+4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
+
+#### `avatar`
+
+**Description:** An image icon that is shown next to statuses and in the profile.\
+**Type:** String (URL)\
+**Version history:**\
+4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
+
+#### `avatar_static`
+
+**Description:** A static version of the avatar. Equal to `avatar` if its value is a static image; different if `avatar` is an animated GIF.\
+**Type:** String (URL)\
+**Version history:**\
+4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
+
+### `avatar_description`
+
+**Description:** A textual description of the avatar image.\
+**Type:** String\
+**Version history:**\
+4.6.0 - added
+
+#### `locked`
+
+**Description:** Whether the account manually approves follow requests.\
+**Type:** Boolean\
+**Version history:**\
+4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
+
+#### `bot`
+
+**Description:** Indicates that the account may perform automated actions, may not be monitored, or identifies as a robot.\
+**Type:** Boolean\
+**Version history:**\
+4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
+
+### Example
+
+```json
+{
+  "id": "23634",
+  "acct": "noiob@awoo.space",
+  "locked": false,
+  "bot": false,
+  "url": "https://awoo.space/@noiob",
+  "avatar": "https://files.mastodon.social/accounts/avatars/000/023/634/original/6ca8804dc46800ad.png",
+  "avatar_static": "https://files.mastodon.social/accounts/avatars/000/023/634/original/6ca8804dc46800ad.png",
+  "avatar_description": "a shark"
+}
+```
+
+---
+
+## AccountRole entity attributes {#AccountRole}
+
+The simplified role entity returned in the Account `roles` array, containing only public role information.
+
+### `id` {#accountrole-id}
+
+**Description:** The ID of the Role in the database.\
+**Type:** String\
+**Version history:**\
+4.1.0 - added
+
+### `name` {#accountrole-name}
+
+**Description:** The name of the role.\
+**Type:** String\
+**Version history:**\
+4.1.0 - added
+
+### `color` {#accountrole-color}
+
+**Description:** The hex code assigned to this role. If no hex code is assigned, the string will be empty.\
+**Type:** String\
+**Version history:**\
+4.1.0 - added
+
+---
 
 ## Field entity attributes {#Field}
 
@@ -459,6 +707,50 @@ aliases: [
 **Type:** {{<nullable>}} String ([Datetime](/api/datetime-format#datetime)) if `value` is a verified URL. Otherwise, null.\
 **Version history:**\
 2.6.0 - added
+
+---
+
+## AccountState entity attributes {#AccountState}
+
+The state of an account.
+
+### `functional` {#accountstate-functional}
+
+**Description:** Whether the current account is fully usable.\
+**Type:** Boolean\
+**Version history:**\
+5.0.0 - added
+
+### `confirmed` {#accountstate-confirmed}
+
+**Description:** Whether the current account has confirmed their email address.\
+**Type:** Boolean\
+**Version history:**\
+5.0.0 - added
+
+### `approved` {#accountstate-approved}
+
+**Description:** Whether the current account has been approved by a moderator.\
+**Type:** Boolean\
+**Version history:**\
+5.0.0 - added
+
+
+### `error` {#accountstate-error}
+
+**Description:** Localized string explaining why the account is not functional, if applicable.\
+**Type:** {{<nullable>}} String\
+**Version history:**\
+5.0.0 - added
+
+### `error_code` {#accountstate-error_code}
+
+**Description:** Reason why the account is not functional, if applicable. Expressed as a code. Additional reasons can be added in the future.\
+**Type:** {{<nullable>}} String (Enumerable, oneOf `pending_confirmation`, `pending_approval`, `account_deleted`, `account_suspended`, `memorial`, `login_disabled`, `2fa_required`)\
+**Version history:**\
+5.0.0 - added
+
+---
 
 ## See also
 

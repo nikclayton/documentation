@@ -26,6 +26,7 @@ aliases: [
   "status_ids": [
     "108882889550545820"
   ],
+  "collection_ids": [],
   "rule_ids": null,
   "target_account": {
     "id": "108366849347798387",
@@ -81,10 +82,12 @@ aliases: [
 **Description:** The generic reason for the report.\
 **Type:** String (Enumerable oneOf)\
 `spam` = Unwanted or repetitive content\
+`legal` = Illegal content\
 `violation` = A specific rule was violated\
 `other` = Some other reason\
 **Version history:**\
-4.0.0 - added
+4.0.0 - added\
+4.2.0 - add `legal` category
 
 ### `comment` {#comment}
 
@@ -113,6 +116,13 @@ aliases: [
 **Type:** {{<nullable>}} Array of String (cast from integer), or null\
 **Version history:**\
 4.0.0 - added
+
+### `collection_ids` {#collection_ids}
+
+**Description:** IDs of Featured Collections that have been attached to this report for additional context.\
+**Type:** {{<nullable>}} Array of String (cast from integer), or null\
+**Version history:**\
+4.6.0 - added
 
 ### `rule_ids` {#rule_ids}
 

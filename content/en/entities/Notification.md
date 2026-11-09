@@ -7,8 +7,8 @@ menu:
 aliases: [
   "/entities/notification",
   "/entities/Notification",
-  "/entities/notification",
-  "/entities/Notification",
+  "/api/entities/notification",
+  "/api/entities/Notification",
 ]
 ---
 
@@ -37,6 +37,10 @@ aliases: [
 `admin.report` = A new report has been filed\
 `severed_relationships` = Some of your follow relationships have been severed as a result of a moderation or block event\
 `moderation_warning` = A moderator has taken action against your account or has sent you a warning\
+`quote` = Someone has quoted one of your statuses\
+`quoted_update` = A status you have quoted has been edited\
+`added_to_collection` = Someone added you to a Collection\
+`collection_update` = A Collection you are featured in was updated\
 **Version history:**\
 0.9.9 - added\
 2.8.0 - added `poll`\
@@ -44,7 +48,9 @@ aliases: [
 3.3.0 - added `status`\
 3.5.0 - added `update` and `admin.sign_up`\
 4.0.0 - added `admin.report`\
-4.3.0 - added `severed_relationships` and `moderation_warning`
+4.3.0 - added `severed_relationships` and `moderation_warning`\
+4.5.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 7) - added `quote` and `quoted_update`\
+4.6.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 10) - added `added_to_collection` and `collection_update`
 
 ### `group_key` {#group_key}
 
@@ -69,7 +75,7 @@ aliases: [
 
 ### `status` {{%optional%}} {#status}
 
-**Description:** Status that was the object of the notification. Attached when `type` of the notification is `favourite`, `reblog`, `status`, `mention`, `poll`, or `update`.\
+**Description:** Status that was the object of the notification. Attached when `type` of the notification is `favourite`, `reblog`, `status`, `mention`, `poll`, `update`, `quote` or `quoted_update`. In the case of `quoted_update`, your quote of the edited status is attached, not the status that was edited.\
 **Type:** [Status]({{< relref "entities/Status" >}})\
 **Version history:**\
 0.9.9 - added
@@ -94,6 +100,20 @@ aliases: [
 **Type:** [AccountWarning]({{< relref "entities/AccountWarning" >}})\
 **Version history:**\
 4.3.0 - added
+
+#### `fallback` {{%optional%}}
+
+**Description:** Fallback information available for some notification types that clients may not support. Only available for some notification types, and only if the `supported_types` parameter is used when querying.\
+**Type:** [NotificationFallback]({{< relref "entities/NotificationFallback" >}})\
+**Version history:**\
+4.6.0 - added
+
+#### `collection` {{%optional%}}
+
+**Description:** Collection that was the object of the notification. Attached when `type` of the notification is `added_to_collection` or `collection_update`.\
+**Type:** [Collection]({{< relref "entities/Collection" >}})\
+**Version history:**\
+4.6.0 - added
 
 ## Examples
 

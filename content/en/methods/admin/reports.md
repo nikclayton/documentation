@@ -29,7 +29,8 @@ View information about all reports.
 **Permissions:** Manage Reports\
 **Version history:**\
 2.9.1 - added\
-4.0.0 - support custom roles and permissions
+4.0.0 - support custom roles and permissions\
+4.6.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 10) - added `unresolved` parameter
 
 #### Request
 
@@ -42,6 +43,9 @@ Authorization
 
 resolved
 : Boolean. Filter for resolved reports?
+
+unresolved
+: Boolean. Filter for unresolved reports? Use in combination with `resolved` to retrieve all reports.
 
 account_id
 : String. Filter for reports filed by this account.
@@ -258,7 +262,7 @@ Authorization
 ##### Form data parameters
 
 category
-: String. Change the classification of the report to `spam`, `violation`, or `other`.
+: String. Change the classification of the report to `spam`, `legal`, `violation`, or `other`.
 
 rule_ids[]
 : Array of Integer. For `violation` category reports, specify the ID of the exact rules broken. Rules and their IDs are available via [GET /api/v1/instance/rules]({{< relref "methods/instance#rules" >}}) and [GET /api/v1/instance]({{< relref "methods/instance#get" >}}).

@@ -3,7 +3,6 @@ title: apps API methods
 description: Register client applications that can be used to obtain OAuth tokens.
 menu:
   docs:
-    weight: 10
     name: apps
     parent: methods
     identifier: methods-apps
@@ -24,7 +23,7 @@ Create a new application to obtain OAuth2 credentials.
 
 {{< hint style="danger" >}}
 In Mastodon prior to 4.3, OAuth Applications could be "vacuumed" and removed from the database under certain conditions, meaning your Application's `client_id` and `client_secret` would not be recognised by the Mastodon server.\
-This automated removal of applications was removed in Mastodon 4.3\
+This automated removal of applications was removed in Mastodon 4.3.\
 \
 A workaround for Mastodon versions older than 4.3 was to register your application, and then immediately request a [Client Credential]({{< relref "client/Token#flow" >}}) token, which would permanently ensure your application always had an active access token and would not be removed.
 {{< /hint >}}
@@ -44,13 +43,14 @@ For more information see: [OAuth 2 client types]({{< relref "spec/oauth#client-t
 4.3.0 - added support for multiple `redirect_uris` in Form data parameters\
 4.3.0 - added `redirect_uris` response property\
 4.3.0 - deprecated `redirect_uri` response property, since this can be a non-URI if multiple `redirect_uris` are registered, use `redirect_uris` instead\
-4.3.0 - changed entity type from [Application]({{< relref "entities/Application">}}) to [CredentialApplication]({{< relref "entities/Application#CredentialApplication">}})
+4.3.0 - changed entity type from [Application]({{< relref "entities/Application">}}) to [CredentialApplication]({{< relref "entities/Application#CredentialApplication">}})\
+4.4.0 - added `client_secret_expires_at`
 
 #### Request {#create-request-example}
 
 Example request:
 
-```
+```http
 POST /api/v1/apps HTTP/1.1
 Content-Type: application/json
 
@@ -95,7 +95,8 @@ Treat the `client_id` and `client_secret` properties as if they are passwords. W
   "redirect_uri": "urn:ietf:wg:oauth:2.0:oob",
   "redirect_uris": ["urn:ietf:wg:oauth:2.0:oob"],
   "client_id": "TWhM-tNSuncnqN7DBJmoyeLnk6K3iJJ71KKXxgL1hPM",
-  "client_secret": "ZEaFUFmF0umgBX1qKJDjaU99Q31lDkOU8NutzTOoliw"
+  "client_secret": "ZEaFUFmF0umgBX1qKJDjaU99Q31lDkOU8NutzTOoliw",
+  "client_secret_expires_at": 0
 }
 ```
 
@@ -113,7 +114,8 @@ Or with multiple redirect URIs:
     "https://app.example/register"
   ],
   "client_id": "TWhM-tNSuncnqN7DBJmoyeLnk6K3iJJ71KKXxgL1hPM",
-  "client_secret": "ZEaFUFmF0umgBX1qKJDjaU99Q31lDkOU8NutzTOoliw"
+  "client_secret": "ZEaFUFmF0umgBX1qKJDjaU99Q31lDkOU8NutzTOoliw",
+  "client_secret_expires_at": 0
 }
 ```
 
@@ -165,13 +167,16 @@ If the Authorization header was provided with a valid token, you should see your
 
 ```json
 {
+  "id": "563419",
   "name": "Test Application",
   "website": "https://app.example",
   "scopes": ["read", "write", "push"],
+  "redirect_uri": "https://app.example/callback\nhttps://app.example/register",
   "redirect_uris": [
     "https://app.example/callback",
     "https://app.example/register"
-  ]
+  ],
+  "vapid_key": "BMAIjoaMYTDbJtfrfocuzO8pzDHI47dzmw0rha6Y=",
 }
 ```
 

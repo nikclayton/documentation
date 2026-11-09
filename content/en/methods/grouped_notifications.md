@@ -3,7 +3,6 @@ title: Grouped notifications API methods
 description: Receive grouped notifications for activity on your account or statuses.
 menu:
   docs:
-    weight: 50
     name: grouped notifications
     parent: methods
     identifier: methods-grouped-notifications
@@ -31,7 +30,7 @@ GET /api/v2/notifications HTTP/1.1
 
 Return grouped notifications concerning the user. This API returns Link headers containing links to the next/previous page. However, the links can also be constructed dynamically using query params and `id` values.
 
-Notifications of type `favourite`, `follow`, `reblog` or `admin.sign_up` with the same type and the same target made in a similar timeframe are given a same `group_key` by the server, and querying this endpoint will return aggregated notifications, with only one object per `group_key`. Other notification types may be grouped in the future. The `grouped_types` parameter should be used by the client to explictely list the types it supports showing grouped notifications for.
+Notifications of type `favourite`, `follow`, `reblog` or `admin.sign_up` with the same type and the same target made in a similar timeframe are given a same `group_key` by the server, and querying this endpoint will return aggregated notifications, with only one object per `group_key`. Other notification types may be grouped in the future. The `grouped_types` parameter should be used by the client to explicitly list the types it supports showing grouped notifications for.
 
 Types to filter include:
 - `mention` = Someone mentioned you in their status
@@ -49,7 +48,8 @@ Types to filter include:
 **OAuth:** User token + `read:notifications`\
 **Version history:**\
 4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added\
-4.4.0 - added `admin.sign_up` to grouped notification types
+4.4.0 - added `admin.sign_up` to grouped notification types\
+4.6.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 10) - added `supported_types` optional parameter
 
 #### Request
 
@@ -89,6 +89,9 @@ grouped_types[]
 
 include_filtered
 : Boolean. Whether to include notifications filtered by the user's [NotificationPolicy]({{< relref "entities/NotificationPolicy" >}}). Defaults to false.
+
+supported_types[]
+: Array of String. Notification types to not get fallback representation for even when some is available. Passing this parameter is required to get any notification fallback at all. When this parameter is used, and a notification which type is *not* included in `supported_types` has an available fallback representation, it will be included in the notification group's `fallback` attribute.
 
 #### Response
 
@@ -215,7 +218,8 @@ View information about a specific notification group with a given group key.
 **Returns:** [GroupedNotificationsResults](#GroupedNotificationsResults)\
 **OAuth:** User token + `read:notifications`\
 **Version history:**\
-4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
+4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added\
+4.6.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 10) - added `supported_types` optional parameter
 
 #### Request
 
@@ -228,6 +232,11 @@ View information about a specific notification group with a given group key.
 
 Authorization
 : {{<required>}} Provide this header with `Bearer <user token>` to gain authorized access to this API method.
+
+##### Query parameters
+
+supported_types[]
+: Array of String. Notification types to not get fallback representation for even when some is available. Passing this parameter is required to get any notification fallback at all. When this parameter is used, and a notification which type is *not* included in `supported_types` has an available fallback representation, it will be included in the notification group's `fallback` attribute.
 
 #### Response
 
@@ -403,7 +412,7 @@ GET /api/v2/notifications/unread_count HTTP/1.1
 
 Get the (capped) number of unread notification groups for the current user.
 A notification is considered unread if it is more recent than the [notifications read marker]({{< relref "methods/markers" >}}).
-Because the count is dependant on the parameters, it is computed every time and is thus a relatively slow operation (although faster than getting the full corresponding notifications), therefore the number of returned notifications is capped.
+Because the count is dependent on the parameters, it is computed every time and is thus a relatively slow operation (although faster than getting the full corresponding notifications), therefore the number of returned notifications is capped.
 
 **Returns:** Hash with a single key of `count`\
 **OAuth:** User token + `read:notifications`\
@@ -472,21 +481,21 @@ Invalid or missing Authorization header.
 #### `partial_accounts` {{%optional%}}
 
 **Description:** Partial accounts referenced by grouped notifications. Those are only returned when requesting grouped notifications with `expand_accounts=partial_avatars`.\
-**Type:** Array of [PartialAccountWithAvatar](#PartialAccountWithAvatar)\
+**Type:** Array of [PartialAccountWithAvatar]({{< relref "entities/Account#PartialAccountWithAvatar" >}})\
 **Version history:**\
 4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
 
 #### `statuses`
 
 **Description:** Statuses referenced by grouped notifications.\
-**Type:** Array of [Status]({{< relref "entities/Status" >}}}\
+**Type:** Array of [Status]({{< relref "entities/Status" >}})\
 **Version history:**\
 4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
 
 #### `notification_groups`
 
 **Description:** The grouped notifications themselves.\
-**Type:** [NotificationGroup](#NotificationGroup)\
+**Type:** Array of [NotificationGroup](#NotificationGroup)\
 **Version history:**\
 4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
 
@@ -495,67 +504,6 @@ Invalid or missing Authorization header.
 TODO
 
 ---
-
-## `PartialAccountWithAvatar` entity {#PartialAccountWithAvatar}
-
-These are stripped-down versions of [Account]({{< relref "entities/Account" >}}) that only contain what is necessary to display a list of avatars, as well as a few other useful properties. The aim is to cut back on expensive server-side serialization and reduce the network payload size of notification groups.
-
-### Attributes
-
-#### `id`
-
-**Description:** The account id.\
-**Type:** String (cast from an integer, but not guaranteed to be a number)\
-**Version history:**\
-4.3.0 - added
-
-#### `acct`
-
-**Description:** The Webfinger account URI. Equal to `username` for local users, or `username@domain` for remote users.\
-**Type:** String\
-**Version history:**\
-4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
-
-#### `url`
-
-**Description:** The location of the user's profile page.\
-**Type:** String (URL)\
-**Version history:**\
-4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
-
-#### `avatar`
-
-**Description:** An image icon that is shown next to statuses and in the profile.\
-**Type:** String (URL)\
-**Version history:**\
-4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
-
-#### `avatar_static`
-
-**Description:** A static version of the avatar. Equal to `avatar` if its value is a static image; different if `avatar` is an animated GIF.\
-**Type:** String (URL)\
-**Version history:**\
-4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
-
-#### `locked`
-
-**Description:** Whether the account manually approves follow requests.\
-**Type:** Boolean\
-**Version history:**\
-4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
-
-#### `bot`
-
-**Description:** Indicates that the account may perform automated actions, may not be monitored, or identifies as a robot.\
-**Type:** Boolean\
-**Version history:**\
-4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
-
-### Examples
-
-TODO
-
---
 
 ## `NotificationGroup` entity {#NotificationGroup}
 
@@ -591,8 +539,14 @@ TODO
 `admin.report` = A new report has been filed\
 `severed_relationships` = Some of your follow relationships have been severed as a result of a moderation or block event\
 `moderation_warning` = A moderator has taken action against your account or has sent you a warning\
+`quote` = Someone has quoted one of your statuses\
+`quoted_update` = A status you have quoted has been edited\
+`added_to_collection` = Someone added you to a Collection\
+`collection_update` = A Collection you are featured in was updated\
 **Version history:**\
-4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
+4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added\
+4.5.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 7) - added `quote` and `quoted_update`\
+4.6.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 10) - added `added_to_collection` and `collection_update`
 
 #### `most_recent_notification_id`
 
@@ -631,7 +585,7 @@ TODO
 
 #### `status_id` {{%optional%}}
 
-**Description:** ID of the [Status]({{< relref "entities/Status" >}}) that was the object of the notification. Attached when `type` of the notification is `favourite`, `reblog`, `status`, `mention`, `poll`, or `update`.\
+**Description:** ID of the [Status]({{< relref "entities/Status" >}}) that was the object of the notification. Attached when `type` of the notification is `favourite`, `reblog`, `status`, `mention`, `poll`, `update`, `quote` or `quoted_update`. In the case of `quoted_update`, your quote of the edited status is attached, not the status that was edited.\
 **Type:** String\
 **Version history:**\
 4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
@@ -656,6 +610,20 @@ TODO
 **Type:** [AccountWarning]({{< relref "entities/AccountWarning" >}})\
 **Version history:**\
 4.3.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 2) - added
+
+#### `fallback` {{%optional%}}
+
+**Description:** Fallback information available for some notification types that clients may not support. Only available for some notification types, and only if the `supported_types` parameter is used when querying.\
+**Type:** [NotificationFallback]({{< relref "entities/NotificationFallback" >}})\
+**Version history:**\
+4.6.0 - added
+
+#### `collection` {{%optional%}}
+
+**Description:** Collection that was the object of the notification. Attached when `type` of the notification is `added_to_collection` or `collection_update`.\
+**Type:** [Collection]({{< relref "entities/Collection" >}})\
+**Version history:**\
+4.6.0 - added
 
 ### Examples
 

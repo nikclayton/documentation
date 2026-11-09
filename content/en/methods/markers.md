@@ -3,7 +3,6 @@ title: markers API methods
 description: Save and restore your position in timelines.
 menu:
   docs:
-    weight: 30
     name: markers
     parent: methods-timelines
     identifier: methods-markers
@@ -26,7 +25,7 @@ GET /api/v1/markers HTTP/1.1
 
 Get current positions in timelines.
 
-**Returns:** Hash of timeline key and associated [Marker]({{< relref "entities/Marker" >}})\
+**Returns:** Hash of String (Enumerable, anyOf `home` or `notifications`) key and associated [Marker]({{< relref "entities/Marker" >}}) value\
 **OAuth:** User token + `read:statuses`\
 **Version history:**\
 3.0.0 - added
@@ -83,7 +82,7 @@ POST /api/v1/markers HTTP/1.1
 
 Save current position in timeline.
 
-**Returns:** [Marker]({{< relref "entities/marker" >}})\
+**Returns:** Hash of String (Enumerable, anyOf `home` or `notifications`) key and associated [Marker]({{< relref "entities/Marker" >}}) value\
 **OAuth:** User token + `write:statuses`\
 **Version history:**\
 3.0.0 - added

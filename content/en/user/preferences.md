@@ -1,6 +1,6 @@
 ---
 title: Set your preferences
-description: Customize things just the way you like them.
+description: Customise things just the way you like them.
 menu:
   docs:
     weight: 70
@@ -15,13 +15,13 @@ Mastodon has multiple theme options:
 
 - Automatically switch between a dark and light theme depending on your operating system preferences.
 - Manually switch between a dark and light theme.
-- Manually use a dark high contrast theme.
+- Optionally use a higher contrast theme.
 
 {{< figure src="assets/light-theme.png" width="70%" caption="Mastodon post and thread as viewed from the light theme" >}}
 
 ### Choose your layout {#layout}
 
-Mastodon defaults to a simple, one-column layout with a compose box on the left and a column switcher on the right. You can choose to enable the advanced web interface, which allows you view and pin multiple columns at the same time.
+Mastodon defaults to a simple, one-column layout with a compose box on the left and a column switcher on the right. You can choose to enable the advanced web interface, which allows you to view and pin multiple columns at the same time.
 
 {{< figure src="assets/advanced-web-ui.png" caption="Columns of the advanced web interface using the light theme" >}}
 
@@ -77,9 +77,9 @@ You can choose to hide your network, which will make your following and follower
 
 If you want to see posts that are boosted multiple times be reinserted into your feed at the top, you can disable boost grouping in timelines.
 
-### Setting defaults for post privacy, post language, and media sensitivity {#posting}
+### Setting defaults for post visibility, post language, and media sensitivity {#posting}
 
-Posts default to public privacy. You can choose to default new posts as unlisted or followers-only instead. For an explanation of post privacy levels, see [Posting to your Mastodon profile &gt; Publishing levels](../posting#privacy).
+Posts default to public visibility. You can choose to default new posts as unlisted or followers-only instead. For an explanation of all post visibility settings, see [Posting to your Mastodon profile &gt; Post visibility & privacy](../posting#privacy). The default posting visibility can be changed from the "Posting defaults" page within the "Preferences" area.
 
 If you primarily or exclusively post in a certain language, it is a good idea to set that language here.
 

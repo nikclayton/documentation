@@ -20,7 +20,8 @@ aliases: [
 	"name": "Owner",
 	"color": "#ff3838",
 	"permissions": "1048575",
-	"highlighted": true
+	"highlighted": true,
+    "collection_limit": 10
 }
 ```
 
@@ -49,7 +50,7 @@ aliases: [
 
 ### `permissions` {#permissions}
 
-**Description:** A bitmask that represents the sum of all permissions granted to the role.\
+**Description:** A bitmask that represents the sum of all permissions granted to the role. This is a potentially large integer in decimal representation. The absence of special permissions is denoted by `'0'`.\
 **Type:** String\
 **Version history:**\
 4.0.0 - added
@@ -60,6 +61,13 @@ aliases: [
 **Type:** Boolean\
 **Version history:**\
 4.0.0 - added
+
+### `collection_limit` {#collection_limit}
+
+**Description:** Maximum number of Collections that users with this role are allowed to create.\
+**Type:** Integer\
+**Version history:**\
+4.6.0 - added
 
 ## Permission flags
 
@@ -124,6 +132,9 @@ To determine the permissions available to a certain role, convert the `permissio
 
 0x80000
 : **Delete User Data**. Allows users to delete other users' data without delay.
+
+0x100000
+: **View live and topic feeds**. Allows users to view public “firehose”, hashtag and link feeds even when those are disabled.
 
 ## See also
 

@@ -5,7 +5,6 @@ description: >-
   Attachments for more information about size and format limits.
 menu:
   docs:
-    weight: 10
     name: media
     parent: methods-statuses
     identifier: methods-media
@@ -223,10 +222,6 @@ The media file was processed, and a `url` to the processed media is available.
 ##### 206: Partial content
 
 The media attachment is still being processed
-
-```json
-
-```
 
 ##### 401: Unauthorized
 

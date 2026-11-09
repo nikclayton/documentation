@@ -33,11 +33,12 @@ aliases: [
   "replies_count": 5,
   "reblogs_count": 6,
   "favourites_count": 11,
+  "quotes_count": 2,
   "favourited": false,
   "reblogged": false,
   "muted": false,
   "bookmarked": false,
-  "content": "<p>&quot;I lost my inheritance with one wrong digit on my sort code&quot;</p><p><a href=\"https://www.theguardian.com/money/2019/dec/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code\" rel=\"nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://www.</span><span class=\"ellipsis\">theguardian.com/money/2019/dec</span><span class=\"invisible\">/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code</span}</p>",
+  "content": "<p>&quot;I lost my inheritance with one wrong digit on my sort code&quot;</p><p><a href=\"https://www.theguardian.com/money/2019/dec/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code\" rel=\"nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://www.</span><span class=\"ellipsis\">theguardian.com/money/2019/dec</span><span class=\"invisible\">/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code</span></a></p>",
   "reblog": null,
   "application": {
     "name": "Web",
@@ -67,12 +68,12 @@ aliases: [
     "fields": [
       {
         "name": "Patreon",
-        "value": "<a href=\"https://www.patreon.com/mastodon\" rel=\"me nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://www.</span><span class=\"\">patreon.com/mastodon</span><span class=\"invisible\"></span}",
+        "value": "<a href=\"https://www.patreon.com/mastodon\" rel=\"me nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://www.</span><span class=\"\">patreon.com/mastodon</span><span class=\"invisible\"></span></a>",
         "verified_at": null
       },
       {
         "name": "Homepage",
-        "value": "<a href=\"https://zeonfederated.com\" rel=\"me nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://</span><span class=\"\">zeonfederated.com</span><span class=\"invisible\"></span}",
+        "value": "<a href=\"https://zeonfederated.com\" rel=\"me nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://</span><span class=\"\">zeonfederated.com</span><span class=\"invisible\"></span></a>",
         "verified_at": "2019-07-15T18:29:57.191+00:00"
       }
     ]
@@ -81,6 +82,7 @@ aliases: [
   "mentions": [],
   "tags": [],
   "emojis": [],
+  "quote": null,
   "card": {
     "url": "https://www.theguardian.com/money/2019/dec/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code",
     "title": "‘I lost my £193,000 inheritance – with one wrong digit on my sort code’",
@@ -96,7 +98,12 @@ aliases: [
     "image": null,
     "embed_url": ""
   },
-  "poll": null
+  "poll": null,
+  "quote_approval": {
+    "automatic": [],
+    "manual": [],
+    "current_user": "automatic"
+  }
 }
 ```
 
@@ -226,6 +233,13 @@ aliases: [
 **Version history:**\
 0.1.0 - added
 
+### `quotes_count` {#quotes_count}
+
+**Description:** How many accepted quotes this status has.\
+**Type:** Integer\
+**Version history:**\
+4.5.0 - added
+
 ### `replies_count` {#replies_count}
 
 **Description:** How many replies this status has received.\
@@ -299,9 +313,16 @@ aliases: [
 ### `quote` {#quote}
 
 **Description:** Information about the status being quoted, if any\
-**Type:* {{<nullable>}} [Quote]({{< relref "entities/quote" >}}), [ShallowQuote]({{< relref "entities/ShallowQuote" >}}) or null\
+**Type:** {{<nullable>}} [Quote]({{< relref "entities/quote" >}}), [ShallowQuote]({{< relref "entities/ShallowQuote" >}}) or null\
 **Version history:**\
 4.4.0 - added
+
+### `quote_approval` {#quote_approval}
+
+**Description:** Summary of the post quote's approval policy and how it applies to the user making the request, that is, whether the user can be expected to be allowed to quote that post\
+**Type:** [QuoteApproval]({{< relref "entities/QuoteApproval" >}})
+**Version history:**\
+4.5.0 - added
 
 ### `favourited` {{%optional%}} {#favourited}
 
@@ -344,6 +365,13 @@ aliases: [
 **Type:** Array of [FilterResult]({{< relref "entities/FilterResult" >}})\
 **Version history:**\
 4.0.0 - added
+
+### `tagged_collections` {#tagged_collections}
+
+**Description:** If `content` includes links to Collections that the server recognized, this includes the actual Collections.\
+**Type:** Array of [Collection]({{< relref "entities/Collection" >}})\
+**Version history:**\
+4.6.0 - added
 
 ## Status::Mention attributes {#Mention}
 

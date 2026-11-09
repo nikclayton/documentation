@@ -32,7 +32,7 @@ aliases: [
     "reblogged": false,
     "muted": false,
     "bookmarked": false,
-    "content": "<p>&quot;I lost my inheritance with one wrong digit on my sort code&quot;</p><p><a href=\"https://www.theguardian.com/money/2019/dec/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code\" rel=\"nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://www.</span><span class=\"ellipsis\">theguardian.com/money/2019/dec</span><span class=\"invisible\">/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code</span}</p>",
+    "content": "<p>&quot;I lost my inheritance with one wrong digit on my sort code&quot;</p><p><a href=\"https://www.theguardian.com/money/2019/dec/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code\" rel=\"nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://www.</span><span class=\"ellipsis\">theguardian.com/money/2019/dec</span><span class=\"invisible\">/07/i-lost-my-193000-inheritance-with-one-wrong-digit-on-my-sort-code</span></a></p>",
     "reblog": null,
     "application": {
       "name": "Web",
@@ -75,25 +75,31 @@ aliases: [
 
 ### `state` {#state}
 
-**Description:** The state of the quote.\
+**Description:** The state of the quote. Unknown values should be treated as `unauthorized`.\
 **Type:** String (Enumerable, oneOf)\
 `pending` = The quote has not been acknowledged by the quoted account yet, and requires authorization before being displayed.\
-`accepted` = The quote has been accepted and can be displayed. This is the only case where `status` is non-null.\
+`accepted` = The quote has been accepted and can be displayed. `quoted_status` is non-null.\
 `rejected` = The quote has been explicitly rejected by the quoted account, and cannot be displayed.\
 `revoked` = The quote has been previously accepted, but is now revoked, and thus cannot be displayed.\
 `deleted` = The quote has been approved, but the quoted post itself has now been deleted.\
-`unauthorized` = The quote has been approved, but cannot be displayed because the user is not authorized to see it.
+`unauthorized` = The quote has been approved, but cannot be displayed because the user is not authorized to see it.\
+`blocked_account` = The quote has been approved, but should not be displayed because the user has blocked the account being quoted. `quoted_status` is non-null.\
+`blocked_domain` = The quote has been approved, but should not be displayed because the user has blocked the domain of the account being quoted. `quoted_status` is non-null.\
+`muted_account` = The quote has been approved, but should not be displayed because the user has muted the the account being quoted. `quoted_status` is non-null.
 **Version history:**\
-4.4.0 - added
+4.4.0 - added\
+4.5.0 - added `blocked_account`, `blocked_domain` and `muted_account`
 
 ### `quoted_status` {#quoted_status}
 
-**Description:** The status being quoted, if the quote has been accepted. This will be `null`, unless the `state` attribute is `accepted`.\
+**Description:** The status being quoted, if the quote has been accepted. This will be `null`, unless the `state` attribute is `accepted`, `blocked_account`, `blocked_domain`, or `muted_account`, or the wrapping [Status]({{< relref "entities/status" >}}) entity has been obtained by calling `DELETE /api/v1/statuses/:id`..\
 **Type:** {{<nullable>}} [Status]({{< relref "entities/status" >}}) or null\
 **Version history:**\
-4.4.0 - added
+4.4.0 - added\
+4.5.7 - `quoted_status` is set to the quoted status regardless of `state` when the entity is returned as part of status deletion
 
 ## See also
 
 {{< page-relref ref="entities/ShallowQuote" caption="ShallowQuote" >}}
+
 {{< caption-link url="https://github.com/mastodon/mastodon/blob/main/app/serializers/rest/quote_serializer.rb" caption="app/serializers/rest/quote_serializer.rb" >}}

@@ -3,7 +3,6 @@ title: search API methods
 description: Search for content in accounts, statuses and hashtags.
 menu:
   docs:
-    weight: 60
     name: search
     parent: methods
     identifier: methods-search
@@ -23,7 +22,7 @@ aliases: [
 GET /api/v2/search HTTP/1.1
 ```
 
-Perform a search for content in accounts, statuses and hashtags with the given parameters.
+Perform a search for content in accounts, statuses and hashtags with the given parameters. Note that the availability of results depends on the specific backend search configuration of the server being queried. By default, accounts and hashtags are always searchable, while statuses depend on an ElasticSearch backend being present and the API request being authenticated (full text search is not available to unauthenticated users).
 
 **Returns:** [Search]({{< relref "entities/Search" >}})\
 **OAuth:** Public (without `resolve` or `offset`), or User token + `read:search`\
@@ -50,7 +49,7 @@ type
 : String. Specify whether to search for only `accounts`, `hashtags`, `statuses`
 
 resolve
-: Boolean. Only relevant if `type` includes `accounts` or if `query` is a HTTPS URL. In the first case, if `true` and (a) the search query is for a remote account (e.g., `someaccount@someother.server`) and (b) the local server does not know about the account, [WebFinger](/spec/webfinger) is used to try and resolve the account at `someother.server`. This provides the best recall at higher latency. If `false`, only accounts the server knows about are returned. In the second case, if `true`, resolving the URL and returning the matching status is attempted. If `false`, this resolving logic is circumvented and a regular search is performed instead.  
+: Boolean. Only relevant if `type` includes `accounts` or if `q` is a HTTPS URL. In the first case, if `true` and (a) the search query is for a remote account (e.g., `someaccount@someother.server`) and (b) the local server does not know about the account, [WebFinger](/spec/webfinger) is used to try and resolve the account at `someother.server`. This provides the best recall at higher latency. If `false`, only accounts the server knows about are returned. In the second case, if `true`, resolving the URL and returning the matching status, account or Collection is attempted. If `false`, this resolving logic is circumvented and a regular search is performed instead.
 
 following
 : Boolean. Only include accounts that the user is following? Defaults to false.
@@ -71,7 +70,7 @@ limit
 : Integer. Maximum number of results to return, per type. Defaults to 20 results per category. Max 40 results per category.
 
 offset
-: Integer. Skip the first n results.
+: Integer. Skip the first n results. Only applies when `type` is also present (ignored otherwise).
 
 #### Response
 ##### 200: OK
@@ -85,14 +84,14 @@ Truncated results of a sample search for "cats" with limit=2.
       "id": "180744",
       "username": "catstar",
       "acct": "catstar@catgram.jp",
-      "display_name": "catstar",
+      "display_name": "catstar"
       // ...
     },
     {
       "id": "214293",
       "username": "catsareweird",
       "acct": "catsareweird",
-      "display_name": "Cats Are Weird",
+      "display_name": "Cats Are Weird"
       // ...
     }
   ],
@@ -101,7 +100,7 @@ Truncated results of a sample search for "cats" with limit=2.
       "id": "103085519055545958",
       "created_at": "2019-11-05T13:23:09.000Z",
       // ...
-      "content": "<p>cats<br>cats never change</p>",
+      "content": "<p>cats<br>cats never change</p>"
       // ...
     },
     {
@@ -110,8 +109,9 @@ Truncated results of a sample search for "cats" with limit=2.
       // ...
       "spoiler_text": "Cats",
       // ...
-      "content": "<p>Cats are inherently good at self-care. </p><p><a href=\"https://mspsocial.net/tags/cats\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>cats</span></a></p>",
+      "content": "<p>Cats are inherently good at self-care. </p><p><a href=\"https://mspsocial.net/tags/cats\" class=\"mention hashtag\" rel=\"nofollow noopener noreferrer\" target=\"_blank\">#<span>cats</span></a></p>"
       // ...
+    }
   ],
   "hashtags": [
     {
@@ -123,7 +123,7 @@ Truncated results of a sample search for "cats" with limit=2.
           "day": "1574553600",
           "uses": "10",
           "accounts": "9"
-        },
+        }
         // ...
       ]
     },
@@ -136,7 +136,7 @@ Truncated results of a sample search for "cats" with limit=2.
           "day": "1574553600",
           "uses": "6",
           "accounts": "5"
-        },
+        }
         // ...
       ]
     }

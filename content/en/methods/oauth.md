@@ -3,7 +3,6 @@ title: OAuth API methods
 description: Generate and manage OAuth tokens.
 menu:
   docs:
-    weight: 10
     name: oauth
     parent: methods-apps
     identifier: methods-oauth
@@ -28,7 +27,8 @@ Displays an authorization form to the user. If approved, it will create and retu
 0.1.0 - added\
 2.6.0 - added `force_login`\
 3.5.0 - added `lang`\
-4.3.0 - added support for PKCE parameters
+4.3.0 - added support for PKCE parameters\
+5.0.0 - added `prompt` and `invite_code` parameters
 
 #### Request
 
@@ -47,7 +47,7 @@ scope
 : String. List of requested [OAuth scopes]({{< relref "api/oauth-scopes" >}}), separated by spaces (or by pluses, if using query parameters). Must be a subset of `scopes` declared during app registration. If not provided, defaults to `read`.
 
 state
-: String. Arbitrary value to passthrough to your server when the user authorizes or rejects the authorization request.
+: String. Arbitrary value to pass through to your server when the user authorizes or rejects the authorization request.
 
 code_challenge
 : String. The [PKCE code challenge]({{< relref "spec/oauth#pkce" >}}) for the authorization request.
@@ -60,6 +60,14 @@ force_login
 
 lang
 : String. The ISO 639-1 two-letter language code to use while rendering the authorization form.
+
+prompt
+: String (Enumerable, oneOf `create` or `login`). OpenID Connect `prompt`.\
+`create` = Enter sign-up flow instead of log-in. If the user is already logged in, they will be asked to log out first.\
+`login` = Require the user to log-in again. If they are already logged in, they will be asked to log out first.
+
+invite_code
+: String. Invitation code, to be used with `prompt=create` when following an invitation to sign-up. The invite code is the last path segment of Mastodon invite URLs of the form `https://example.com/invite/:invite_code`.
 
 #### Response
 
@@ -307,7 +315,8 @@ The properties exposed by this endpoint can help you better integrate with the M
 **OAuth:** Public\
 **Version history:**\
 4.3.0 - added\
-4.4.0 - added `userinfo_endpoint`
+4.4.0 - added `userinfo_endpoint`\
+5.0.0 - added `prompt_values_supported`
 
 #### Response
 
@@ -381,6 +390,10 @@ The properties exposed by this endpoint can help you better integrate with the M
   "token_endpoint_auth_methods_supported": [
     "client_secret_basic",
     "client_secret_post"
+  ],
+  "prompt_values_supported": [
+    "create",
+    "login"
   ]
 }
 ```
@@ -391,7 +404,7 @@ On Mastodon versions before 4.3.0, requesting this endpoint will result in a `40
 
 Instead, you will need to "guess" what that server supports, instead of discovering supported OAuth 2 endpoints, grant flows & scopes dynamically.
 
-You may want to fallback to the [Instance Metadata endpoint]({{< relref "methods/instance#v2" >}}) to try to discover what Mastodon version the server is running by parsing the `version` field; however, this is very brittle and not recommended.
+You may want to fall back to the [Instance Metadata endpoint]({{< relref "methods/instance#v2" >}}) to try to discover what Mastodon version the server is running by parsing the `version` field; however, this is very brittle and not recommended.
 
 ---
 

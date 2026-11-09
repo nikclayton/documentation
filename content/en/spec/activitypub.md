@@ -140,7 +140,7 @@ attributedTo
 : Used to determine the profile which authored the status
 
 to/cc
-: Used to determine audience and visibility of a status, in combination with mentions. See [Mentions for adddressing and notifications](#Mention)
+: Used to determine audience and visibility of a status, in combination with mentions. See [Mentions for addressing and notifications](#Mention)
 
 tag
 : Used to mark up mentions and hashtags.
@@ -149,7 +149,7 @@ tag[].type
 : Either `Mention`, `Hashtag`, or `Emoji` is currently supported. See the [Hashtag](#Hashtag) and [Custom emoji](#Emoji) extension sections for more information
 
 tag[].name
-: The plain-text Webfinger address of a profile Mention (`@user` or `@user@domain`), or the plain-text Hashtag (`#tag`), or the custom Emoji shortcode (`:thounking:`)
+: The plain-text WebFinger address of a profile Mention (`@user` or `@user@domain`), or the plain-text Hashtag (`#tag`), or the custom Emoji shortcode (`:thounking:`)
 
 tag[].href
 : The URL of the actor or tag
@@ -238,7 +238,7 @@ Move
 ### Properties used
 
 preferredUsername
-: Used for Webfinger lookup. Must be unique on the domain, and must correspond to a Webfinger `acct:` URI.
+: Used for WebFinger lookup. Must be unique on the domain, and must correspond to a WebFinger `acct:` URI.
 
 name
 : Used as profile display name.
@@ -291,6 +291,15 @@ suspended
 attributionDomains
 : Domains allowed to use `fediverse:creator` for this actor in published articles.
 
+showFeatured
+: Whether to show the “featured” tab on this account's profile.
+
+showMedia
+: Whether to show the “media” tab on this account's profile.
+
+showRepliesInMedia
+: Whether to include replies in the “media” tab of this account's profile.
+
 ## JSON-LD Contexts and Extensions {#contexts}
 
 {{< caption-link url="https://github.com/mastodon/mastodon/blob/main/app/lib/activitypub/adapter.rb" caption="app/lib/activitypub/adapter.rb" >}}
@@ -318,7 +327,7 @@ Contains terms used for Mastodon features.
 
 Base URI: `https://www.w3.org/ns/activitystreams#`
 
-Contains ActivityStreams extended properties that have been proposed but not officially adopted yet.
+Contains ActivityStreams extended properties that have been proposed but not officially adopted yet. These have now been documented by the [ActivityPub Miscellaneous Terms](https://swicg.github.io/miscellany/) document.
 
 - as:Hashtag (`https://www.w3.org/ns/activitystreams#Hashtag`)
 - as:manuallyApprovesFollowers (`https://www.w3.org/ns/activitystreams#manuallyApprovesFollowers`)
@@ -614,12 +623,12 @@ As noted above while listing the [schema.org @context extensions](#schema), Mast
     {
       "type": "PropertyValue",
       "name": "Patreon",
-      "value": "<a href=\"https://www.patreon.com/mastodon\" rel=\"me nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://www.</span><span class=\"\">patreon.com/mastodon</span><span class=\"invisible\"></span}"
+      "value": "<a href=\"https://www.patreon.com/mastodon\" rel=\"me nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://www.</span><span class=\"\">patreon.com/mastodon</span><span class=\"invisible\"></span></a>"
     },
     {
       "type": "PropertyValue",
       "name": "Homepage",
-      "value": "<a href=\"https://zeonfederated.com\" rel=\"me nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://</span><span class=\"\">zeonfederated.com</span><span class=\"invisible\"></span}"
+      "value": "<a href=\"https://zeonfederated.com\" rel=\"me nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://</span><span class=\"\">zeonfederated.com</span><span class=\"invisible\"></span></a>"
     }
   ]
 }
@@ -856,13 +865,13 @@ Mastodon uses the `as:sensitive` extension property to mark certain posts as sen
 
 ### Quote posts and quote controls {#Quote}
 
-Mastodon implements experimental support for handling remote quote posts according to [FEP-044f](https://codeberg.org/fediverse/fep/src/branch/main/fep/044f/fep-044f.md). Additionally, it understands `quoteUri`, `quoteUrl` and `_misskey_quote` for compatibility.
+Mastodon implements support for handling remote quote posts according to [FEP-044f](https://codeberg.org/fediverse/fep/src/branch/main/fep/044f/fep-044f.md). Additionally, it understands `quoteUri`, `quoteUrl` and `_misskey_quote` for compatibility.
 
 Should a post contain multiple quotes, Mastodon only accepts the first one.
 
-Furthermore, Mastodon does not handle the full range of interaction policies, but instead converts the authorized followers to a combination of “public”, “followers” and “unknown”, defaulting to “nobody”.
+Furthermore, Mastodon does not handle the full range of interaction policies, but instead converts the authorized followers to a combination of “public”, “followers”, “following” and “nobody”, defaulting to “nobody”.
 
-At this time, Mastodon does not offer authoring quotes, nor does it expose a quote policy, or produce stamps for incoming quote requests.
+As of v4.5, Mastodon offers authoring quotes and granting quote approvals according to the same specification.
 
 ## Other functionality
 
@@ -881,6 +890,16 @@ When delivering a message to a remote user, an optional `Collection-Synchronizat
 - `collectionId` = MUST be the sender's `followers` collection
 - `url` = a URL to a partial collection containing the identifier of every one of the sender's followers residing on the receiver's instance. MUST reside on the same domain as the actor itself, and SHOULD be only accessible with a signed query from the receiver's instance
 - `digest` = hexadecimal representation of the XORed SHA256 digests of each of the identifiers in the partial collection
+
+#### Digest calculation
+
+The digest is calculated by:
+
+1. Computing the SHA256 hash of each follower identifier (as a UTF-8 encoded string)
+2. XORing all the resulting digest bytes together
+3. Converting the final result to hexadecimal representation
+
+For multiple followers, each SHA256 digest is XORed with the others. For example, with followers A and B: `digest = SHA256(A) XOR SHA256(B)`.
 
 Example:
 

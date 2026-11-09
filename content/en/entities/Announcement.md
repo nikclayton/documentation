@@ -54,7 +54,8 @@ aliases: [
       "count": 1,
       "me": true
     }
-  ]
+  ],
+  "reactions_allowed": true
 }
 ```
 
@@ -85,13 +86,6 @@ aliases: [
 
 **Description:** When the announcement will end.\
 **Type:** {{<nullable>}} String ([Datetime](/api/datetime-format#datetime)) or null\
-**Version history:**\
-3.1.0 - added
-
-### `published` {#published}
-
-**Description:** Whether the announcement is currently active.\
-**Type:** Boolean\
 **Version history:**\
 3.1.0 - added
 
@@ -157,6 +151,13 @@ aliases: [
 **Type:** Array of [Reaction]({{< relref "entities/Reaction" >}})\
 **Version history:**\
 3.1.0 - added
+
+### `reactions_allowed` {#reactions_allowed}
+
+**Description:** Whether emoji reactions on this announcement are allowed.\
+**Type:** Boolean\
+**Version history:**\
+5.0.0 - added
 
 ## Announcement::Account attributes {#Account}
 

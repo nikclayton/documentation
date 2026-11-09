@@ -1,9 +1,8 @@
 ---
 title: trends API methods
-description: View hashtags that are currently being used more frequently than usual.
+description: Listings of tags, statuses, and links with increased activity
 menu:
   docs:
-    weight: 10
     name: trends
     parent: methods-instance
     identifier: methods-trends
@@ -17,6 +16,13 @@ aliases: [
 <style>
 #TableOfContents ul ul ul {display: none}
 </style>
+
+## Summary
+
+These endpoints return the relevant trending results for each of tags, statuses,
+and links. Results are returned according to an internal trending score, and not
+guaranteed to be chronologically or lexically sorted. Trending scores are
+periodically recalculated.
 
 ## View trending tags {#tags}
 

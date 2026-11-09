@@ -3,7 +3,6 @@ title: accounts API methods
 description: Methods concerning accounts and profiles.
 menu:
   docs:
-    weight: 20
     name: accounts
     parent: methods
     identifier: methods-accounts
@@ -17,7 +16,7 @@ aliases: [
 #TableOfContents ul ul ul {display: none}
 </style>
 
-## Register an account {#create}
+## Register an account {{%deprecated%}} {#create}
 
 ```http
 POST /api/v1/accounts HTTP/1.1
@@ -33,7 +32,8 @@ A relationship between the OAuth Application and created user account is stored.
 2.7.0 - added\
 3.0.0 - added `reason` parameter\
 3.4.0 - added `details` to failure response\
-4.4.0 - added `date_of_birth` parameter
+4.4.0 - added `date_of_birth` parameter\
+5.0.0 - deprecated in favor of the [OAuth sign-up flow]({{< relref "methods/oauth#authorize" >}})
 
 #### Request
 
@@ -166,9 +166,15 @@ Test to make sure that the user token works.
 **OAuth:** User token + `profile` or `read:accounts`\
 **Version history:**\
 0.0.0 - added\
-4.3.0 - added `profile` scope
+4.3.0 - added `profile` scope\
+5.0.0 - added `allow_nonfunctional` parameter
 
 #### Request
+
+##### Query parameters
+
+allow_nonfunctional
+: Boolean. Whether to get account information even if the account is non-functional (such as e.g. not being approved or confirmed), defaults to `false`.
 
 ##### Headers
 
@@ -192,6 +198,7 @@ Note the extra `source` property, which is not visible on accounts other than yo
   "created_at": "2016-11-24T10:02:12.085Z",
   "note": "<p>i have approximate knowledge of many things. perpetual student. (nb/ace/they)</p><p>xmpp/email: a@trwnh.com<br /><a href=\"https://trwnh.com\" rel=\"nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://</span><span class=\"\">trwnh.com</span><span class=\"invisible\"></span></a><br />help me live: <a href=\"https://liberapay.com/at\" rel=\"nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://</span><span class=\"\">liberapay.com/at</span><span class=\"invisible\"></span></a> or <a href=\"https://paypal.me/trwnh\" rel=\"nofollow noopener noreferrer\" target=\"_blank\"><span class=\"invisible\">https://</span><span class=\"\">paypal.me/trwnh</span><span class=\"invisible\"></span></a></p><p>- my triggers are moths and glitter<br />- i have all notifs except mentions turned off, so please interact if you wanna be friends! i literally will not notice otherwise<br />- dm me if i did something wrong, so i can improve<br />- purest person on fedi, do not lewd in my presence<br />- #1 ami cole fan account</p><p>:fatyoshi:</p>",
   "url": "https://mastodon.social/@trwnh",
+  "uri": "https://mastodon.social/users/trwnh",
   "avatar": "https://files.mastodon.social/accounts/avatars/000/014/715/original/34aa222f4ae2e0a9.png",
   "avatar_static": "https://files.mastodon.social/accounts/avatars/000/014/715/original/34aa222f4ae2e0a9.png",
   "header": "https://files.mastodon.social/accounts/headers/000/014/715/original/5c6fc24edb3bb873.jpg",
@@ -200,9 +207,12 @@ Note the extra `source` property, which is not visible on accounts other than yo
   "following_count": 178,
   "statuses_count": 33120,
   "last_status_at": "2019-11-24T15:49:42.251Z",
+  "indexable": true,
+  "roles": [],
   "source": {
     "privacy": "public",
     "sensitive": false,
+    "spoiler_field": false,
     "language": "",
     "note": "i have approximate knowledge of many things. perpetual student. (nb/ace/they)\r\n\r\nxmpp/email: a@trwnh.com\r\nhttps://trwnh.com\r\nhelp me live: https://liberapay.com/at or https://paypal.me/trwnh\r\n\r\n- my triggers are moths and glitter\r\n- i have all notifs except mentions turned off, so please interact if you wanna be friends! i literally will not notice otherwise\r\n- dm me if i did something wrong, so i can improve\r\n- purest person on fedi, do not lewd in my presence\r\n- #1 ami cole fan account\r\n\r\n:fatyoshi:",
     "fields": [
@@ -227,7 +237,11 @@ Note the extra `source` property, which is not visible on accounts other than yo
         "verified_at": null
       }
     ],
-    "follow_requests_count": 0
+    "follow_requests_count": 0,
+    "attribution_domains": [],
+    "hide_collections": false,
+    "discoverable": false,
+    "indexable": true
   },
   "emojis": [
     {
@@ -258,7 +272,14 @@ Note the extra `source` property, which is not visible on accounts other than yo
       "value": "systemic analysis, design patterns, anticapitalism, info/tech freedom, theory and philosophy, and otherwise being a genuine and decent wholesome poster. i&apos;m just here to hang out and talk to cool people!",
       "verified_at": null
     }
-  ]
+  ],
+  "role": {
+    "id": "-99",
+    "name": "",
+    "permissions": "65536",
+    "color": "",
+    "highlighted": false
+  }
 }
 ```
 
@@ -324,7 +345,10 @@ Update the user's display and preferences.
 2.7.0 - added `discoverable` parameter\
 4.1.0 - added `hide_collections` parameter\
 4.2.0 - added `indexable` parameter\
-4.4.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 3) - added `attribution_domains` parameter
+4.4.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 3) - added `attribution_domains` parameter\
+4.5.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 7) - added `quote_policy` parameter\
+4.6.1 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 11) - added `avatar_description` and `header_description` parameter\
+5.0.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 12) - added `source[spoiler_field]` parameter
 
 #### Request
 
@@ -344,8 +368,14 @@ note
 avatar
 : Avatar image encoded using `multipart/form-data`
 
+avatar_description
+: String. A plain-text description of the avatar, for accessibility purposes.
+
 header
 : Header image encoded using `multipart/form-data`
+
+header_description
+: String. A plain-text description of the header, for accessibility purposes.
 
 locked
 : Boolean. Whether manual approval of follow requests is required.
@@ -363,25 +393,31 @@ indexable
 : Boolean. Whether public posts should be searchable to anyone.
 
 attribution_domains[]
-: Array of String. Domains of websites allowed to credit the account.
+: Array of String. Domains of websites allowed to credit the account. Maximum of 10 domains.
 
 fields_attributes
-: Hash. The profile fields to be set. Inside this hash, the key is an integer cast to a string (although the exact integer does not matter), and the value is another hash including `name` and `value`. By default, max 4 fields.
+: Hash. The profile fields to be set. Inside this hash, the key is an integer cast to a string (although the exact integer does not matter), and the value is another hash including `name` and `value`. By default, max 4 fields (specified in [Instance#max_profile_fields]({{< relref "entities/Instance#max_profile_fields" >}})).
 
 fields_attributes[:index][name]
-: String. The name of the profile field. By default, max 255 characters.
+: String. The name of the profile field. By default, max 255 characters (specified in [Instance#profile_field_name_limit]({{< relref "entities/Instance#profile_field_name_limit" >}})).
 
 fields_attributes[:index][value]
-: String. The value of the profile field. By default, max 255 characters.
+: String. The value of the profile field. By default, max 255 characters (specified in [Instance#profile_field_value_limit]({{< relref "entities/Instance#profile_field_value_limit" >}})).
 
 source[privacy]
-: String. Default post privacy for authored statuses. Can be `public`, `unlisted`, or `private`.
+: String (Enumerable, oneOf `public`, `unlisted`, or `private`). Default post privacy for authored statuses.
 
 source[sensitive]
 : Boolean. Whether to mark authored statuses as sensitive by default.
 
 source[language]
 : String. Default language to use for authored statuses (ISO 639-1)
+
+source[quote_policy]
+: String (Enumerable, oneOf `public` `followers` `nobody`). Default quote policy for new posts.
+
+source[spoiler_field]
+: Boolean. Whether to add a content warning to new posts by default.
 
 #### Response
 
@@ -416,7 +452,7 @@ PATCH https://mastodon.example/api/v1/accounts/update_credentials
 &...
 ```
 
-Note that the integer index does not actually matter -- fields will be populated by the order in which they are provided. For example:
+Note that the integer index does not actually matter - fields will be populated by the order in which they are provided. For example:
 
 ```json
 {
@@ -462,9 +498,12 @@ You should use accounts/verify_credentials to first obtain plaintext representat
   "following_count": 182,
   "statuses_count": 33760,
   "last_status_at": "2019-12-01T00:12:08.731Z",
+  "indexable": true,
+  "roles": [],
   "source": {
     "privacy": "public",
     "sensitive": false,
+    "spoiler_field": false,
     "language": "",
     "note": "i have approximate knowledge of many things. perpetual student. (nb/ace/they)\r\n\r\nxmpp/email: a@trwnh.com\r\nhttps://trwnh.com\r\nhelp me live: https://liberapay.com/at or https://paypal.me/trwnh\r\n\r\n- my triggers are moths and glitter\r\n- i have all notifs except mentions turned off, so please interact if you wanna be friends! i literally will not notice otherwise\r\n- dm me if i did something wrong, so i can improve\r\n- purest person on fedi, do not lewd in my presence\r\n- #1 ami cole fan account\r\n\r\n:fatyoshi:",
     "fields": [
@@ -489,7 +528,11 @@ You should use accounts/verify_credentials to first obtain plaintext representat
         "verified_at": null
       }
     ],
-    "follow_requests_count": 0
+    "follow_requests_count": 0,
+    "attribution_domains": [],
+    "hide_collections": false,
+    "discoverable": false,
+    "indexable": true
   },
   "emojis": [
     {
@@ -520,7 +563,14 @@ You should use accounts/verify_credentials to first obtain plaintext representat
       "value": "systemic analysis, design patterns, anticapitalism, info/tech freedom, theory and philosophy, and otherwise being a genuine and decent wholesome poster. i&apos;m just here to hang out and talk to cool people!",
       "verified_at": null
     }
-  ]
+  ],
+  "role": {
+    "id": "-99",
+    "name": "",
+    "permissions": "65536",
+    "color": "",
+    "highlighted": false
+  }
 }
 ```
 
@@ -597,6 +647,14 @@ The Account record will be returned. Note that `acct` of local users does not in
   "statuses_count": 61013,
   "last_status_at": "2019-11-30T20:02:08.277Z",
   "emojis": [],
+  "indexable": true,
+  "roles": [
+    {
+      "id": "3",
+      "name": "Owner",
+      "color": "#ff3838"
+    }
+  ],
   "fields": [
     {
       "name": "Patreon",
@@ -633,6 +691,8 @@ The Account record will be returned. Note that `acct` of local users does not in
   "following_count": 405,
   "statuses_count": 28982,
   "last_status_at": "2019-12-01T00:39:57.264Z",
+  "indexable": true,
+  "roles": [],
   "emojis": [
     {
       "shortcode": "ms_rainbow_flag",
@@ -1084,15 +1144,16 @@ Sample output with limit=2.
     "id": "963410",
     "username": "gautambhatia",
     "acct": "gautambhatia",
-    "display_name": "Gautam Bhatia",
+    "display_name": "Gautam Bhatia"
     // ...
   },
   {
     "id": "1007400",
     "username": "seafrog",
     "acct": "seafrog@glitterkitten.co.uk",
-    "display_name": "🐓🦃 Heck Partridge 🤠 🦆",
+    "display_name": "🐓🦃 Heck Partridge 🤠 🦆"
     // ...
+  }
 ]
 ```
 
@@ -1950,7 +2011,7 @@ GET /api/v1/accounts/:id/endorsements HTTP/1.1
 
 Accounts that the user is currently featuring on their profile.
 
-**Returns:** [Account]({{< relref "entities/account" >}})\
+**Returns:** Array of [Account]({{< relref "entities/account" >}})\
 **OAuth:** Public\
 **Version history:**\
 4.4.0 - added
@@ -2336,6 +2397,7 @@ Find out whether a given account is followed, blocked, muted, etc.
 **Version history:**\
 0.0.0 - added\
 4.3.0 - added `with_suspended` parameter
+4.6.0 - added `muting_expires_at`
 
 #### Request
 ##### Headers
@@ -2368,6 +2430,7 @@ Sample call with `id[]=1&id[]=2`
     "blocked_by": false,
     "muting": false,
     "muting_notifications": false,
+    "muting_expires_at": null,
     "requested": false,
     "domain_blocking": false,
     "endorsed": false
@@ -2382,6 +2445,7 @@ Sample call with `id[]=1&id[]=2`
     "blocked_by": false,
     "muting": false,
     "muting_notifications": false,
+    "muting_expires_at": "2026-02-12T13:45:25Z",
     "requested": false,
     "domain_blocking": false,
     "endorsed": false
@@ -2570,7 +2634,7 @@ resolve=true, but the domain part of the user@domain address is not a currently 
 
 ---
 
-## Lookup account ID from Webfinger address {#lookup}
+## Lookup account ID from WebFinger address {#lookup}
 
 ```http
 GET /api/v1/accounts/lookup HTTP/1.1
@@ -2579,7 +2643,7 @@ GET /api/v1/accounts/lookup HTTP/1.1
 Quickly lookup a username to see if it is available, skipping WebFinger resolution.
 
 **Returns:** [Account]({{< relref "entities/Account">}})\
-**OAuth:** Public\
+**OAuth:** User token + `read:accounts`\
 **Version history:**\
 3.4.0 - added
 
@@ -2587,7 +2651,7 @@ Quickly lookup a username to see if it is available, skipping WebFinger resoluti
 ##### Query parameters
 
 acct
-: {{<required>}} String. The username or Webfinger address to lookup.
+: {{<required>}} String. The username or WebFinger address to lookup.
 
 #### Response
 ##### 200: OK

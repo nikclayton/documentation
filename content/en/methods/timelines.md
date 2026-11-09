@@ -3,7 +3,6 @@ title: timelines API methods
 description: Read and view timelines of statuses.
 menu:
   docs:
-    weight: 40
     name: timelines
     parent: methods
     identifier: methods-timelines
@@ -33,7 +32,8 @@ View public statuses.
 2.6.0 - add `min_id`\
 3.0.0 - auth is required if public preview is disabled\
 3.1.4 - added `remote`\
-3.3.0 - both `min_id` and `max_id` can be used at the same time now
+3.3.0 - both `min_id` and `max_id` can be used at the same time now\
+4.5.0 - add [access control settings]({{<relref "entities/Instance/#timelines_access-live_feeds">}})
 
 #### Request
 
@@ -89,6 +89,18 @@ Sample API call with limit=2
 ]
 ```
 
+Note: The array returned may be empty in case the feed is disabled. See the [instance configuration attribute]({{<relref "entities/Instance/#timelines_access-live_feeds" >}}).
+
+##### 401: Unauthorized
+
+Invalid or missing Authorization header when the server is configured to disable unauthenticated access to the public timeline. When unauthenticated access to remote statuses in this timeline are disabled, unauthenticated requests to this endpoint will fail with a 401 unless `local` is set to true. Likewise for unauthenticated access to local posts and the `remote` parameter.
+
+```json
+{
+  "error": "The access token is invalid"
+}
+```
+
 ---
 
 ## View hashtag timeline {#tag}
@@ -107,7 +119,8 @@ View public statuses containing the given hashtag.
 2.6.0 - add `min_id`\
 2.7.0 - add `any[]`, `all[]`, `none[]` for additional tags\
 3.0.0 - auth is required if public preview is disabled\
-3.3.0 - both `min_id` and `max_id` can be used at the same time now. add `remote`
+3.3.0 - both `min_id` and `max_id` can be used at the same time now. add `remote`\
+4.5.0 - add [access control settings]({{<relref "entities/Instance/#timelines_access-hashtag_feeds">}})
 
 #### Request
 
@@ -122,6 +135,10 @@ Authorization
 : Provide this header with `Bearer <user_token>` to gain authorized access to this API method.
 
 ##### Query parameters
+
+{{< hint style="info" >}}
+Note that there is a limit to the number of tags that will be applied from each query param (defaults to 4 total tags). Keep this in mind when using the `any`, `all`, and `none` params.
+{{</ hint >}}
 
 any[]
 : Array of String. Return statuses that contain any of these additional tags.
@@ -215,17 +232,17 @@ Sample timeline for the hashtag #cats and limit=2
 ]
 ```
 
-##### 404: Not found
+Note: The array returned may be empty in case no matching tag exists or the feed is disabled. See the [instance configuration attribute]({{<relref "entities/Instance/#timelines_access-hashtag_feeds" >}}).
 
-Hashtag does not exist
+##### 401: Unauthorized
+
+Invalid or missing Authorization header when the server is configured to disable unauthenticated access to hashtag timelines.
 
 ```json
 {
-  "error": "Record not found"
+  "error": "The access token is invalid"
 }
 ```
-
----
 
 ## View home timeline {#home}
 
@@ -241,7 +258,8 @@ View statuses from followed users and hashtags.
 0.0.0 - added\
 2.6.0 - add `min_id`\
 3.3.0 - both `min_id` and `max_id` can be used at the same time now\
-4.0.0 - as users can now follow hashtags, statuses from non-followed users may appear in the timeline
+4.0.0 - as users can now follow hashtags, statuses from non-followed users may appear in the timeline\
+5.0.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 12) - added `exclude_direct`, `exclude_reblogs`, `exclude_quotes` and `exclude_replies` parameters\
 
 #### Request
 
@@ -264,6 +282,18 @@ min_id
 limit
 : Integer. Maximum number of results to return. Defaults to 20 statuses. Max 40 statuses.
 
+exclude_direct
+: Boolean. Whether to exclude Direct Messages from the response.
+
+exclude_reblogs
+: Boolean. Whether to exclude reblogs from the response.
+
+exclude_quotes
+: Boolean. Whether to exclude quote posts from the response.
+
+exclude_replies
+: Boolean. Whether to exclude replies from the response.
+
 #### Response
 ##### 200: OK
 
@@ -283,9 +313,6 @@ Statuses in your home timeline will be returned
 ##### 206: Partial content
 
 Home feed is regenerating
-
-```text
-```
 
 ##### 401: Unauthorized
 
@@ -310,7 +337,8 @@ View public statuses containing a link to the specified currently-trending artic
 **Returns:** Array of [Status]({{<relref "entities/status">}})\
 **OAuth:** Public. Requires app token + `read:statuses` if the instance has disabled public preview.\
 **Version history:**\
-4.3.0 - added
+4.3.0 - added\
+4.5.0 - add [access control settings]({{<relref "entities/Instance/#timelines_access-trending_link_feeds">}})
 
 #### Request
 
@@ -337,7 +365,31 @@ limit
 : Integer. Maximum number of results to return. Defaults to 20 statuses. Max 40 statuses.
 
 #### Response
+
 ##### 200: OK
+
+Sample API call with limit=2
+
+```json
+[
+  {
+    "id": "103206804533200177",
+    "created_at": "2019-11-26T23:27:31.000Z",
+    // ...
+    "visibility": "public",
+    // ...
+  },
+  {
+    "id": "103206804086086361",
+    "created_at": "2019-11-26T23:27:32.000Z",
+    // ...
+    "visibility": "public",
+    // ...
+  }
+]
+
+```
+Note: The array returned may be empty in case the feed is disabled. See the [instance configuration attribute]({{<relref "entities/Instance/#timelines_access-trending_link_feeds" >}}).
 
 ##### 404: Not found
 
@@ -346,6 +398,16 @@ The provided URL is not currently trending.
 ```json
 {
   "error": "Record not found"
+}
+```
+
+##### 401: Unauthorized
+
+Invalid or missing Authorization header when the server is configured to disable unauthenticated access to link timelines.
+
+```json
+{
+  "error": "The access token is invalid"
 }
 ```
 
@@ -496,6 +558,8 @@ Invalid or missing Authorization header.
 ---
 
 ## See also
+
+{{< page-relref ref="entities/Instance/#timelines_access" caption="Instance#configuration[timeline_access]" >}}
 
 {{< caption-link url="https://github.com/mastodon/mastodon/blob/main/app/controllers/api/v1/timelines/home_controller.rb" caption="app/controllers/api/v1/timelines/home_controller.rb" >}}
 

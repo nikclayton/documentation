@@ -9,7 +9,7 @@ menu:
 
 ## Pre-requisites {#pre-requisites}
 
-* A machine running **Ubuntu 24.04** or **Debian 12** that you have root access to
+* A machine running **Ubuntu 24.04** or **Debian 13** that you have root access to
 * A **domain name** (or a subdomain) for the Mastodon server, e.g. `example.com`
 * An email delivery service or other **SMTP server**
 
@@ -19,17 +19,17 @@ You will be running the commands as root. If you aren’t already root, switch t
 
 ### System repositories {#system-repositories}
 
-Make sure curl, wget, gnupg, apt-transport-https, lsb-release and ca-certificates are installed first:
+Make sure curl, wget, gnupg, lsb-release and ca-certificates are installed first:
 
 ```bash
-apt install -y curl wget gnupg apt-transport-https lsb-release ca-certificates
+apt install -y curl wget gnupg lsb-release ca-certificates
 ```
 
 #### Node.js {#node-js}
 
 ```bash
 curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_24.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
 ```
 
 #### PostgreSQL {#postgresql}
@@ -44,12 +44,11 @@ echo "deb [signed-by=/usr/share/keyrings/postgresql.asc] http://apt.postgresql.o
 ```bash
 apt update
 apt install -y \
-  imagemagick ffmpeg libvips-tools libpq-dev libxml2-dev libxslt1-dev file git-core \
-  g++ libprotobuf-dev protobuf-compiler pkg-config gcc autoconf \
-  bison build-essential libssl-dev libyaml-dev libreadline6-dev \
-  zlib1g-dev libncurses5-dev libffi-dev libgdbm-dev \
-  nginx nodejs redis-server redis-tools postgresql \
-  certbot python3-certbot-nginx libidn11-dev libicu-dev libjemalloc-dev
+  imagemagick ffmpeg libvips-tools libpq-dev libxslt1-dev file git \
+  protobuf-compiler pkg-config autoconf bison build-essential \
+  libssl-dev libyaml-dev libreadline-dev zlib1g-dev libffi-dev \
+  libgdbm-dev nginx nodejs redis-server postgresql certbot \
+  python3-certbot-nginx libidn-dev libicu-dev libjemalloc-dev
 ```
 
 #### Yarn {#yarn}
@@ -74,7 +73,13 @@ adduser --disabled-password mastodon
 
 #### Performance configuration (optional) {#performance-configuration-optional}
 
-For optimal performance, you may use [pgTune](https://pgtune.leopard.in.ua/#/) to generate an appropriate configuration and edit values in `/etc/postgresql/17/main/postgresql.conf` before restarting PostgreSQL with `systemctl restart postgresql`.
+For optimal performance, you may use [pgTune](https://pgtune.leopard.in.ua/#/) to generate an appropriate configuration.
+
+* Select the appropriate PG version and OS Type
+* Select "Web application" for DB Type
+* Use details appropriate to your server for the other values
+
+With the generated configuration, edit the values in `/etc/postgresql/18/main/postgresql.conf` before restarting PostgreSQL with `systemctl restart postgresql`.
 
 #### Creating a user {#creating-a-user}
 
@@ -121,7 +126,7 @@ Install rbenv and ruby-build:
 git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
 echo 'eval "$(rbenv init -)"' >> ~/.bashrc
-exec bash
+source ~/.bashrc
 git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build
 ```
 
@@ -138,7 +143,7 @@ Now to install Ruby and JavaScript dependencies:
 ```bash
 bundle config deployment 'true'
 bundle config without 'development test'
-bundle install -j$(getconf _NPROCESSORS_ONLN)
+bundle install
 yarn install
 ```
 
@@ -193,7 +198,7 @@ Then edit `/etc/nginx/sites-available/mastodon` to
 1. Replace `example.com` with your own domain name
 2. Uncomment the `ssl_certificate` and `ssl_certificate_key` (ignore this step if you are bringing your own certificate):
 
-    ```
+    ```nginx
     ssl_certificate     /etc/letsencrypt/live/example.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;;
     ```

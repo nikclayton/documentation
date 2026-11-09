@@ -3,7 +3,6 @@ title: notifications API methods
 description: Receive notifications for activity on your account or statuses.
 menu:
   docs:
-    weight: 50
     name: notifications
     parent: methods
     identifier: methods-notifications
@@ -34,6 +33,8 @@ Types to filter include:
 - `favourite` = Someone favourited one of your statuses
 - `poll` = A poll you have voted in or created has ended
 - `update` = A status you boosted with has been edited
+- `added_to_collection` = Someone added you to a Collection
+- `collection_update` = A Collection you are featured in was updated
 - `admin.sign_up` = Someone signed up (optionally sent to admins)
 - `admin.report` = A new report has been filed
 
@@ -48,7 +49,8 @@ Types to filter include:
 3.5.0 - added `types`; add `update` and `admin.sign_up` types\
 4.0.0 - added `admin.report` type\
 4.1.0 - notification limit changed from 15 (max 30) to 40 (max 80)\
-4.3.0 - added `include_filtered` parameter
+4.3.0 - added `include_filtered` parameter\
+4.6.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 10) - added `supported_types` optional parameter
 
 #### Request
 
@@ -82,6 +84,9 @@ account_id
 
 include_filtered
 : Boolean. Whether to include notifications filtered by the user's [NotificationPolicy]({{< relref "entities/NotificationPolicy" >}}). Defaults to false.
+
+supported_types[]
+: Array of String. Notification types to not get fallback representation for even when some is available. Passing this parameter is required to get any notification fallback at all. When this parameter is used, and a notification which type is *not* included in `supported_types` has an available fallback representation, it will be included in the notification's `fallback` attribute.
 
 #### Response
 
@@ -188,7 +193,8 @@ View information about a notification with a given ID.
 **Returns:** [Notification]({{< relref "entities/Notification" >}})\
 **OAuth:** User token + `read:notifications`\
 **Version history:**\
-0.0.0 - added
+0.0.0 - added\
+4.6.0 (`mastodon` [API version]({{< relref "entities/Instance#api-versions" >}}) 10) - added `supported_types` optional parameter
 
 #### Request
 
@@ -201,6 +207,11 @@ View information about a notification with a given ID.
 
 Authorization
 : {{<required>}} Provide this header with `Bearer <user_token>` to gain authorized access to this API method.
+
+##### Query parameters
+
+supported_types[]
+: Array of String. Notification types to not get fallback representation for even when some is available. Passing this parameter is required to get any notification fallback at all. When this parameter is used, and a notification which type is *not* included in `supported_types` has an available fallback representation, it will be included in the notification's `fallback` attribute.
 
 #### Response
 
@@ -403,7 +414,7 @@ GET /api/v1/notifications/unread_count HTTP/1.1
 
 Get the (capped) number of unread notifications for the current user.
 A notification is considered unread if it is more recent than the [notifications read marker]({{< relref "methods/markers" >}}).
-Because the count is dependant on the parameters, it is computed every time and is thus a relatively slow operation (although faster than getting the full corresponding notifications), therefore the number of returned notifications is capped.
+Because the count is dependent on the parameters, it is computed every time and is thus a relatively slow operation (although faster than getting the full corresponding notifications), therefore the number of returned notifications is capped.
 
 **Returns:** Hash with a single key of `count`\
 **OAuth:** User token + `read:notifications`\

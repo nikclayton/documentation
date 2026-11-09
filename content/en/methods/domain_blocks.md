@@ -3,7 +3,6 @@ title: domain_blocks API methods
 description: Manage a user's blocked domains.
 menu:
   docs:
-    weight: 50
     name: domain_blocks
     parent: methods-accounts
     identifier: methods-domain_blocks
@@ -84,11 +83,13 @@ Invalid or missing Authorization header.
 POST /api/v1/domain_blocks HTTP/1.1
 ```
 
-Block a domain to:
-- hide all public posts from it
-- hide all notifications from it
-- remove all followers from it
-- prevent following new users from it (but does not remove existing follows)
+Block a domain to change interactions with that domain's server:
+
+- Hide all public posts
+- Hide all notifications
+- Remove all followers
+- Prevent following new users (does not remove existing follows)
+- Stop from fetching public posts (when `AUTHORIZED_FETCH` is enabled)
 
 **Returns:** Empty\
 **OAuth:** User token + `write:blocks` or `follow`\
